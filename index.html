@@ -204,20 +204,17 @@ function openSurprise() {
     "Your surprise is open 💖";
   document.getElementById("openBtn").disabled = true;
   document.getElementById("message").textContent = birthdayMessage;
-const song = document.getElementById("birthdaySong");
-song.volume = 0.5;
 
-song.play().catch(error => {
-  alert("Music could not play: " + error.message);
-});
-  // Play music when the surprise is opened
+  // Play the birthday song
   const song = document.getElementById("birthdaySong");
-  song.volume = 0.4;
+  if (song) {
+    song.volume = 0.5;
+    song.play().catch(error => {
+      console.log("Music could not start:", error);
+    });
+  }
 
-  song.play().catch(error => {
-    console.log("Music could not start:", error);
-  });
-
+  // Create floating decorations
   for (let i = 0; i < 45; i++) {
     setTimeout(createParticle, i * 35);
   }
