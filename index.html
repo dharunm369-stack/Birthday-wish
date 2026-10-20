@@ -204,7 +204,12 @@ function openSurprise() {
     "Your surprise is open 💖";
   document.getElementById("openBtn").disabled = true;
   document.getElementById("message").textContent = birthdayMessage;
+const song = document.getElementById("birthdaySong");
+song.volume = 0.5;
 
+song.play().catch(error => {
+  alert("Music could not play: " + error.message);
+});
   // Play music when the surprise is opened
   const song = document.getElementById("birthdaySong");
   song.volume = 0.4;
