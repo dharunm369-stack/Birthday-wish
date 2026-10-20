@@ -197,27 +197,25 @@ May all your little dreams come true! 🌸`;
 
 
 
+
 function openSurprise() {
   const section = document.getElementById("surprise");
-  const song = document.getElementById("birthdaySong");
-
-  // Start music directly from the button tap
-  if (song) {
-    song.volume = 0.5;
-    const playback = song.play();
-
-    if (playback) {
-      playback.catch(error => {
-        console.log("Audio playback failed:", error);
-      });
-    }
-  }
+  const message = document.getElementById("message");
+  const button = document.getElementById("openBtn");
 
   section.style.display = "block";
-  document.getElementById("openBtn").textContent =
-    "Your surprise is open 💖";
-  document.getElementById("openBtn").disabled = true;
-  document.getElementById("message").textContent = birthdayMessage;
+  message.textContent = birthdayMessage;
+  button.textContent = "Your surprise is open 💖";
+  button.disabled = true;
+
+  const song = document.getElementById("birthdaySong");
+
+  if (song) {
+    song.volume = 0.5;
+    song.play().catch(error => {
+      console.log("Music playback failed:", error);
+    });
+  }
 
   for (let i = 0; i < 45; i++) {
     setTimeout(createParticle, i * 35);
@@ -228,6 +226,7 @@ function openSurprise() {
     block: "start"
   });
 }
+
 
 
 
