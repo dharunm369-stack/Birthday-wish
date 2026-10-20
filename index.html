@@ -196,25 +196,29 @@ Thank you for being the person you are.
 May all your little dreams come true! 🌸`;
 
 
+
 function openSurprise() {
   const section = document.getElementById("surprise");
-  section.style.display = "block";
+  const song = document.getElementById("birthdaySong");
 
+  // Start music directly from the button tap
+  if (song) {
+    song.volume = 0.5;
+    const playback = song.play();
+
+    if (playback) {
+      playback.catch(error => {
+        console.log("Audio playback failed:", error);
+      });
+    }
+  }
+
+  section.style.display = "block";
   document.getElementById("openBtn").textContent =
     "Your surprise is open 💖";
   document.getElementById("openBtn").disabled = true;
   document.getElementById("message").textContent = birthdayMessage;
 
-  // Play the birthday song
-  const song = document.getElementById("birthdaySong");
-  if (song) {
-    song.volume = 0.5;
-    song.play().catch(error => {
-      console.log("Music could not start:", error);
-    });
-  }
-
-  // Create floating decorations
   for (let i = 0; i < 45; i++) {
     setTimeout(createParticle, i * 35);
   }
@@ -224,6 +228,7 @@ function openSurprise() {
     block: "start"
   });
 }
+
 
 
 function createParticle() {
