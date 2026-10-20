@@ -198,7 +198,16 @@ function openSurprise() {
     "Your surprise is open 💖";
   document.getElementById("openBtn").disabled = true;
   document.getElementById("message").textContent = birthdayMessage;
+const song = document.getElementById("birthdaySong");
+song.volume = 0.4;
 
+song.play().then(() => {
+  document.getElementById("musicBtn").textContent =
+    "⏸ Pause Music 🎵";
+}).catch(() => {
+  document.getElementById("musicBtn").textContent =
+    "▶ Play Music 🎵";
+});
   for (let i = 0; i < 45; i++) {
     setTimeout(createParticle, i * 35);
   }
@@ -224,6 +233,30 @@ function finalSurprise() {
     setTimeout(createParticle, i * 45);
   }
 }
+  function toggleMusic() {
+  const song = document.getElementById("birthdaySong");
+  const button = document.getElementById("musicBtn");
+
+  if (song.paused) {
+    song.play().then(() => {
+      button.textContent = "⏸ Pause Music 🎵";
+    }).catch(() => {
+      button.textContent = "▶ Play Music 🎵";
+    });
+  } else {
+    song.pause();
+    button.textContent = "▶ Play Music 🎵";
+  }
+}
 </script>
 </body>
+  <div style="margin-top: 20px;">
+  <audio id="birthdaySong" loop preload="auto">
+    <source src="./reflections.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="musicBtn" onclick="toggleMusic()">
+    ▶ Play Music 🎵
+  </button>
+</div>
 </html>
