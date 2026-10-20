@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,9 +153,7 @@ footer {
 
   <p>Someone has a little surprise waiting...</p>
 
-  <button id="openBtn" onclick="openSurprise()">
-    Open Your Surprise 💌
-  </button>
+  <button id="openBtn" type="button">Open Your Surprise 💌</button>
 
   <section id="surprise" aria-live="polite">
     <div style="font-size:48px">🎉🎂💖</div>
@@ -171,18 +168,17 @@ footer {
     </div>
 
     <p>One more thing... 👀</p>
-    <button onclick="finalSurprise()">One Last Surprise ✨</button>
+    <button id="finalBtn" type="button">One Last Surprise ✨</button>
     <p id="finalMessage" class="hidden">
       🌈 You deserve all the happiness in the world.You are never missed in this world,
       You are always one of the kind! 💗
     </p>
-    
   </section>
 
   <footer>Made with 💗, just for you.</footer>
   <audio id="birthdaySong" loop preload="auto">
-  <source src="./reflections.mp3" type="audio/mpeg">
-</audio>
+    <source src="./reflections.mp3" type="audio/mpeg">
+  </audio>
 </main>
 
 <script>
@@ -195,40 +191,39 @@ and beautiful memories.
 Thank you for being the person you are.
 May all your little dreams come true! 🌸`;
 
+const openButton = document.getElementById("openBtn");
+const finalButton = document.getElementById("finalBtn");
 
-
+openButton.addEventListener("click", openSurprise);
+finalButton.addEventListener("click", finalSurprise);
 
 function openSurprise() {
   const section = document.getElementById("surprise");
   const message = document.getElementById("message");
-  const button = document.getElementById("openBtn");
+  const song = document.getElementById("birthdaySong");
 
   section.style.display = "block";
   message.textContent = birthdayMessage;
-  button.textContent = "Your surprise is open 💖";
-  button.disabled = true;
+  openButton.textContent = "Your surprise is open 💖";
+  openButton.disabled = true;
 
-  const song = document.getElementById("birthdaySong");
-
+  // Calling play directly in the tap handler satisfies mobile browser policies.
   if (song) {
     song.volume = 0.5;
-    song.play().catch(error => {
-      console.log("Music playback failed:", error);
-    });
+    const playPromise = song.play();
+    if (playPromise) {
+      playPromise.catch((error) => {
+        console.warn("Music could not start. The surprise is still open.", error);
+      });
+    }
   }
 
   for (let i = 0; i < 45; i++) {
     setTimeout(createParticle, i * 35);
   }
 
-  section.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-
-
-
 
 function createParticle() {
   const particle = document.createElement("div");
@@ -246,21 +241,6 @@ function finalSurprise() {
   document.getElementById("finalMessage").classList.remove("hidden");
   for (let i = 0; i < 30; i++) {
     setTimeout(createParticle, i * 45);
-  }
-}
-  function toggleMusic() {
-  const song = document.getElementById("birthdaySong");
-  const button = document.getElementById("musicBtn");
-
-  if (song.paused) {
-    song.play().then(() => {
-      button.textContent = "⏸ Pause Music 🎵";
-    }).catch(() => {
-      button.textContent = "▶ Play Music 🎵";
-    });
-  } else {
-    song.pause();
-    button.textContent = "▶ Play Music 🎵";
   }
 }
 </script>
